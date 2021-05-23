@@ -315,6 +315,7 @@ def check_calendar_by_district(
                 base_url.format(location["district_id"], start_date),
                 headers=request_header,
             )
+            # print(f'{base_url.format(location["district_id"], start_date)}    request_header :- {request_header}')
 
             if resp.status_code == 401:
                 print("TOKEN INVALID")
@@ -885,6 +886,7 @@ def clear_bucket_and_send_OTP(storage_url, mobile, request_header):
     print(f"Requesting OTP with mobile number {mobile}..")
     txnId = requests.post(
         url="https://cdn-api.co-vin.in/api/v2/auth/generateMobileOTP",
+        # url="https://cdn-api.co-vin.in/api/v2/auth/public/generateOTP",
         json=data,
         headers=request_header,
     )
@@ -893,8 +895,8 @@ def clear_bucket_and_send_OTP(storage_url, mobile, request_header):
         txnId = txnId.json()["txnId"]
     else:
         print("Unable to Create OTP")
-        print(txnId.text)
-        time.sleep(5)  # Saftey net againt rate limit
+        # print(txnId.text)
+        time.sleep(5)  # Saftey net against rate limit
         txnId = None
 
     return txnId
